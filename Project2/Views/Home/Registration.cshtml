@@ -1,0 +1,99 @@
+﻿@model Project2.Models.User
+
+<link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+<script src="~/lib/jquery/jquery.js"></script>
+<script src="~/lib/jquery-validate/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        <strong>Suceess Registered</strong>@ViewBag.Message
+    </div>
+}
+else
+{
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mb-3">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    OrganizationX
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-action="Registration">Register</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Register</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Registration">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="employee_Fname" class="control-label"></label>
+                        <input asp-for="employee_Fname" class="form-control" />
+                        <span asp-validation-for="employee_Fname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="employee_Lname" class="control-label"></label>
+                        <input asp-for="employee_Lname" class="form-control" />
+                        <span asp-validation-for="employee_Lname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="employee_email" class="control-label"></label>
+                        <input asp-for="employee_email" class="form-control" />
+                        <span asp-validation-for="employee_email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="employee_password" class="control-label"></label>
+                        <input asp-for="employee_password" class="form-control" />
+                        <span asp-validation-for="employee_password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="password" class="control-label"></label>
+                        <input asp-for="password" class="form-control" />
+                        <span asp-validation-for="password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<footer class="border-top blockquote-footer text-muted text-center">
+    <div class="container">
+        Copyright &copy; OrganizationX @DateTime.Now.Year
+    </div>
+</footer>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
