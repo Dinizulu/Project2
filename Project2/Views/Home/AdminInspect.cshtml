@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = "_LayoutManager";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AdminInspect</title>
+</head>
+<body>
+    @using (Html.BeginForm("Index", "Employee",FormMethod.Get))
+    {
+        <p>
+            <b>Search by:</b><h6>Employee Number</h6>
+            @Html.TextBox("Search")<input type="submit" value="Search" />
+        </p>
+    }
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Employee Number</th>
+                <th>Department</th>
+                <th>Education Field</th>
+                <th>Hourly Rate</th>
+                <th> Monthly Income </th>
+                <th>Monthly Rate</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var employee in ViewBag.Data)
+            {
+                <tr>
+                    <td>@employee.EmployeeNumber</td>
+                    <td>@employee.Department</td>
+                    <td>@employee.EducationField</td>
+                    <td>@employee.HourlyRate</td>
+                    <td>@employee.MonthlyIncome</td>
+                    <td>@employee.MonthlyRate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

@@ -7,9 +7,10 @@
 
 @if (ViewBag.Message != null)
 {
-    <div class="alert alert-success">
-        <strong>Suceess Registered</strong>@ViewBag.Message
-    </div>
+<div class="alert alert-success">
+    <strong>Suceess Registered </strong>@ViewBag.Message
+    <a asp-action="Login"> Back to List </a>
+</div>
 }
 else
 {
@@ -74,7 +75,17 @@ else
                         <span asp-validation-for="password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                        <label asp-for="employee_role" class="control-label"></label>
+                        <select asp-for="employee_role" class="form-control">
+                            <option disabled>--Select--</option>
+                            <option>Employee</option>
+                            <option>Admin</option>
+                            <option>Manager</option>
+                        </select>
+                        <span asp-validation-for="employee_role" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Register" class="btn btn-outline-dark" />
                     </div>
                 </form>
             </div>

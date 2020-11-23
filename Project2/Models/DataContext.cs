@@ -21,7 +21,6 @@ namespace Project2.Models
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<Login> Login { get; set; }
 
     }
 }

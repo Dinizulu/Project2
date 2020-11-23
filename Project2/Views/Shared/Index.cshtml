@@ -1,7 +1,11 @@
 ﻿
 @{
-    Layout = "_LayoutManager";
+    Layout = null;
 }
+<link href="~/css/Styler.css" rel="stylesheet" />
+<link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="~/lib/twitter-bootstrap/css/bootstrap-grid.css" rel="stylesheet" />
+<link href="~/lib/twitter-bootstrap/css/bootstrap-reboot.css" rel="stylesheet" />
 
 <!DOCTYPE html>
 
@@ -11,7 +15,7 @@
     <title>Index</title>
 </head>
 <body>
-    @using (Html.BeginForm("Index", "Employee",FormMethod.Get))
+    @using (Html.BeginForm("Index", "Shared", FormMethod.Get))
     {
         <p>
             <b>Search by:</b><h6>Employee Number</h6>
@@ -34,21 +38,23 @@
         </thead>
 
         <tbody>
-            @foreach (var employee in ViewBag.employees)
-            {
-                <tr>
-                    <td>@employee.EmployeeNumber</td>
-                    <td>@employee.Department</td>
-                    <td>@employee.EducationField</td>
-                    <td>@employee.HourlyRate</td>
-                    <td>@employee.MonthlyIncome</td>
-                    <td>@employee.MonthlyRate</td>
-                    <td>
-                        Edit |
-                        <a asp-controller="emplyee_details" asp-action="delete" asp-route-id="@employee.EmployeeNumber" onclick="return confirm('You Want Do Delete Entered Employee?')">Delete</a>
-                    </td>
-                </tr>
-            }
+                @foreach (var employee in ViewBag.employees)
+                {
+                    <tr>
+                        <td>@employee.EmployeeNumber</td>
+                        <td>@employee.Department</td>
+                        <td>@employee.EducationField</td>
+                        <td>@employee.HourlyRate</td>
+                        <td>@employee.MonthlyIncome</td>
+                        <td>@employee.MonthlyRate</td>
+                        <td>
+                            <a asp-controller="emplyee_details" asp-action="EditUser" asp-route-id="@employee.EmployeeNumber" onclick="return ">Update</a> |
+                            <a asp-controller="emplyee_details" asp-action="Delete" asp-route-id="@employee.EmployeeNumber">Delete</a>
+                        </td>
+                    </tr>
+                }
+            
+
         </tbody>
     </table>
 </body>

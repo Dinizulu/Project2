@@ -6,28 +6,23 @@ using System.Threading.Tasks;
 
 namespace Project2.Models
 {
-    public class UserEdit
+    public class UserInfo
     {
         [Key]
-        [Required]
-        [Display(Name ="Employee Number")]
+        [Display(Name ="Enter Employee Number or leave blank")]
         public int EmployeeNumber { get; set; }
 
-        [Required(AllowEmptyStrings =false,ErrorMessage ="Please enter your correct age")]
-        [Display(Name ="Enter age")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your correct age")]
+        [Display(Name = "Enter age")]
         public int Age { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Require")]
         [Display(Name = "Select Attrition")]
-         public string Attrition { get; set; }
+        public string Attrition { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [Display(Name = "Select Business Travel")]
         public string BusinessTravel { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter Department")]
-        [Display(Name = "Department")]
-        public string Department { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter Distance from home")]
         [Display(Name = "Distance from home")]
@@ -41,11 +36,15 @@ namespace Project2.Models
         [Display(Name = "Enter Education Field")]
         public string EducationField { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter Department")]
+        [Display(Name = "Enter Department")]
+        public string Department { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter Environment Satisfaction")]
         [Display(Name = "Enter Environmental Satisfaction")]
-        public int EnvironmentalSatisfaction { get; set; }
+        public int EnvironmentSatisfaction { get; set; }
 
-        public int EmplyeeCount { get; set; }
+        public int EmployeeCount { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please select Gender")]
         [Display(Name = "Gender")]
@@ -53,7 +52,11 @@ namespace Project2.Models
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter job role")]
         [Display(Name = "Job Role")]
-         public string JobRole { get; set; }
+        public string JobRole { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter job level")]
+        [Display(Name = "Job Level")]
+        public int JobLevel { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please select Marital Status")]
         [Display(Name = "Marital Status")]
@@ -101,6 +104,10 @@ namespace Project2.Models
 
         [Required]
         [Display(Name = "Years With Current Manager")]
-        public int YearsWithCurrentManager { get; set; }
+        public int YearsWithCurrManager { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Enter Correct Password")]
+        [DataType(DataType.Password)]
+        public string emplyee_password { get; set; }
     }
 }

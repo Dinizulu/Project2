@@ -35,6 +35,10 @@ namespace Project2.Models
         [DataType(DataType.Password)]
         [Compare("employee_password",ErrorMessage ="Password Entered does not match!")]
         public string password { get; set; }
+
+        [Display(Name ="Enter Select Role")]
+        [Required]
+        public string employee_role { get; set; }
     }
 }
 
