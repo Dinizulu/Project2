@@ -114,12 +114,12 @@ namespace Project2.Contrellers
                         }
                         else if (user.employee_role == "Admin" && string.Compare(Incription.Crypt(user.employee_password), Is.employee_password) == 0)
                         {
-                            ViewBag.Admin = user.employee_password;
+                            ViewBag.Emp = user.employee_password;
                             return View("AdminV");
                         }
                         else if (user.employee_role == "Manager" && string.Compare(Incription.Crypt(user.employee_password), Is.employee_password) == 0)
                         {
-                            ViewBag.Mananger = user.employee_password;
+                            ViewBag.Emp = user.employee_password;
                             return View("Manager");
                         }
                         else
@@ -240,11 +240,11 @@ namespace Project2.Contrellers
                     ds.Employees.Remove(employee);
                     ds.SaveChanges();
                 }
-                return RedirectToAction("ViewEmployee");
+                return View("ViewEmployee");
             }
             catch
             {
-                return View();
+                return View("ViewEmployee");
             }
 
         }

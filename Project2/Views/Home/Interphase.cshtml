@@ -18,7 +18,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mb-3">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" asp-action="Home">
                     OrganizationX
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,16 +32,10 @@
                     </ul>
                     <ul class="navbar-nav flex-grow-1 navbar-dark">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="">Home</a>
+                            <a class="nav-link text-dark btn-block" asp-action="UserInfo">Add Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-action="UserInfo">Add Information</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"asp-controller="" asp-action="ViewEmployee">View Information</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark">View Personal</a>
+                            <a class="nav-link text-dark btn-block" asp-action="UserInfoData">View Information</a>
                         </li>
                     </ul>
                 </div>

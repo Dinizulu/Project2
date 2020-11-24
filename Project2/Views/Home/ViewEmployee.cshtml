@@ -19,37 +19,46 @@
     <title>ViewEmployee</title>
 </head>
 <body>
+    <h1 class="align-self-lg-center text-center">List Of Employees</h1>
+    <div class="form-group">
+        <a class="btn btn-dark"  asp-action="Manager">Back</a>
+    </div>
+    <hr />
     <table id="=id" class="table table-striped table-bordered nowrap">
-        <tr>
-            <th>Employee Number</th>
-            <th>Department</th>
-            <th>Education Field</th>
-            <th>Hourley Rate</th>
-            <th>Montley Rate</th>
-            <th>Montle Income</th>
-            <th>Acttion</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Employee Number</th>
+                <th>Department</th>
+                <th>Education Field</th>
+                <th>Hourley Rate</th>
+                <th>Montley Rate</th>
+                <th>Montle Income</th>
+                <th>Acttion</th>
+            </tr>
+        </thead>
         @foreach (var employee in ViewBag.employees)
         {
-            <tr>
-                <td>@employee.EmployeeNumber</td>
-                <td>@employee.Department</td>
-                <td>@employee.EducationField</td>
-                <td>@employee.HourlyRate</td>
-                <td>@employee.MonthlyRate</td>
-                <td>@employee.MonthlyIncome</td>
-                <td><a asp-controller="emplyee_details" asp-action="EditUser" asp-route-id="@employee.EmployeeNumber">Edit</a> | 
-                    <a asp-controller="emplyee_details" asp-action="Delete" asp-route-id="@employee.EmployeeNumber">Delete</a></td>
-            </tr>
+        <tr>
+            <td>@employee.EmployeeNumber</td>
+            <td>@employee.Department</td>
+            <td>@employee.EducationField</td>
+            <td>@employee.HourlyRate</td>
+            <td>@employee.MonthlyRate</td>
+            <td>@employee.MonthlyIncome</td>
+            <td>
+                <a asp-controller="emplyee_details" asp-action="EditUser" asp-route-id="@employee.EmployeeNumber">Edit</a> |
+                <a asp-controller="emplyee_details" asp-action="Delete" asp-route-id="@employee.EmployeeNumber">Delete</a>
+            </td>
+        </tr>
         }
     </table>
-    <script>
+    @section Scripts {
         $(document).ready(function () {
-            var table = $('#id').DataTable({
-                searchPanes: true
-            });
-            table.searchPanes.container().prependTo(table.table().container());
+        var table = $('#id').DataTable({
+        searchPanes: true
         });
-    </script>
+        table.searchPanes.container().prependTo(table.table().container());
+        });
+    }
 </body>
 </html>
