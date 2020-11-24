@@ -1,6 +1,7 @@
 ﻿body {
     margin:0;
     padding:0;
+    background-color:cadetblue;
 }
 .table{
     overflow-y:auto;

@@ -1,0 +1,44 @@
+﻿
+@{
+    Layout = null;
+}
+
+<link href="~/css/Styler.css" rel="stylesheet" />
+<link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="~/lib/twitter-bootstrap/css/bootstrap-grid.css" rel="stylesheet" />
+<link href="~/lib/twitter-bootstrap/css/bootstrap-reboot.css" rel="stylesheet" />
+<script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+<script src="~/lib/jquery/jquery.js"></script>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Manager</title>
+</head>
+<body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mb-3">
+                <div class="container">
+                    <a class="navbar-brand" href="#">
+                        OrganizationX
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </nav>
+        </header>
+    <hr />
+    <div class="text-black-50 d-block text-center">
+        <h1>Welcome </h1>
+    </div>
+        <div class="container text-xl-center align-content-center">
+            <a asp-action="ViewEmployee" class="btn btn-primary btn-lg btn-block" onclick="">View List Of All Employee Data</a>
+
+            <button type="button" class="btn btn-secondary btn-lg btn-block">Dash Boards</button>
+            <a asp-action="Home" class="btn btn-secondary btn-lg btn-block" onclick="Home">LogOut</a>
+        </div>
+    </body>
+</html>

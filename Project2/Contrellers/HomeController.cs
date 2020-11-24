@@ -10,6 +10,7 @@ using RestSharp;
 
 namespace Project2.Contrellers
 {
+    
     [Route("emplyee_details")]
 
     [Route("employees")]
@@ -27,6 +28,14 @@ namespace Project2.Contrellers
         }
 
         [HttpGet]
+        [Route("ViewEmployee")]
+        public IActionResult ViewEmployee()
+        {
+            ViewBag.employees = db.Employees.ToList();
+            return View();
+        }
+
+        [HttpGet]
         [Route("Registration")]
 
         public IActionResult Registration()
@@ -38,32 +47,41 @@ namespace Project2.Contrellers
         [Route("Registration")]
         public IActionResult Registration(User user)
         {
-            string message = "";
-            if (ModelState.IsValid)
+            try
             {
-                bool EmailExst = Exist(user.employee_email);
-
-                if(EmailExst)
+                string message = "";
+                if (ModelState.IsValid)
                 {
-                    return View(user);
-                }
-                else
-                {
-                    user.employee_password = Incription.Crypt(user.employee_password);
-                    user.password = Incription.Crypt(user.password);
+                    bool EmailExst = Exist(user.employee_email);
 
-                    using (DataContext usr = new DataContext())
+                    if (EmailExst)
                     {
-                        usr.Add(user);
-                        usr.SaveChanges();
+                        return View(user);
+                    }
+                    else
+                    {
+                        user.employee_password = Incription.Crypt(user.employee_password);
+                        user.password = Incription.Crypt(user.password);
 
-                        message = "Registered Successfull You Can Now Log In";
+                        using (DataContext usr = new DataContext())
+                        {
+                            usr.Add(user);
+                            usr.SaveChanges();
+
+                            message = "Registered Successfull You Can Now Log In";
+                        }
                     }
                 }
+                ViewBag.Message = message;
+                ModelState.Clear();
+                return View(user);
             }
-            ViewBag.Message = message;
-            ModelState.Clear();
-            return View(user);
+            catch
+            {
+                ViewBag.Message = "Erro trying to enter you data try again";
+                return View();
+            }
+
         }
 
         [HttpGet]
@@ -78,44 +96,37 @@ namespace Project2.Contrellers
         [Route("Login")]
         public IActionResult Login(User user)
         {
-            string varify = "";
-
-            using (DataContext log = new DataContext())
+            try
             {
-                var Is = log.User.Where(a => a.employee_email == user.employee_email).FirstOrDefault();
-                if(Is != null)
+                string varify = "";
+
+                using (DataContext log = new DataContext())
                 {
-                    if(string.Compare(Incription.Crypt(user.employee_password),Is.employee_password) == 0)
+                    var Is = log.User.Where(a => a.employee_email == user.employee_email).FirstOrDefault();
+                    var rle = log.User.Where(a => a.employee_role == user.employee_role).FirstOrDefault();
+                    if (rle != null)
                     {
-                        var rle = log.User.Where(a => a.employee_role == user.employee_role).FirstOrDefault();
-                        if(rle != null)
+                        if (user.employee_role == "Employee" && string.Compare(Incription.Crypt(user.employee_password), Is.employee_password) == 0)
                         {
-                            if (user.employee_role == "Employee")
-                            {
-                                ModelState.Clear();
-                                return View("Interphase");
-                            }
-                            else if (user.employee_role == "Admin")
-                            {
-                                return View("AdminV");
-                            }
-                            else if (user.employee_role == "Manager")
-                            {
-                                return View("Index");
-                            }
-                            else
-                            {
-                                ModelState.Clear();
-                                varify = "User info provided not valid";
-                             }
+                            ViewBag.Emp = user.employee_password;
+                            ModelState.Clear();
+                            return View("Interphase");
+                        }
+                        else if (user.employee_role == "Admin" && string.Compare(Incription.Crypt(user.employee_password), Is.employee_password) == 0)
+                        {
+                            ViewBag.Admin = user.employee_password;
+                            return View("AdminV");
+                        }
+                        else if (user.employee_role == "Manager" && string.Compare(Incription.Crypt(user.employee_password), Is.employee_password) == 0)
+                        {
+                            ViewBag.Mananger = user.employee_password;
+                            return View("Manager");
                         }
                         else
                         {
                             ModelState.Clear();
                             varify = "User info provided not valid";
                         }
-
-                        
                     }
                     else
                     {
@@ -123,52 +134,16 @@ namespace Project2.Contrellers
                         varify = "User info provided not valid";
                     }
                 }
-                else
-                {
-                    ModelState.Clear();
-                    varify = "User info provided not valid";
-                }
+
+                ViewBag.Varify = varify;
+                return View();
             }
-
-            ViewBag.Varify = varify;
-            return View();
-        }
-
-        [Authorize]
-        [Route("Login")]
-        public IActionResult Logout()
-        {
-            return RedirectToAction("Login", "Home");
-        }
-        
-        [HttpGet]
-        [Route("Index")]
-
-        public IActionResult Index(int Search)
-        {
-            if(Convert.ToString(Search) != null)
+            catch
             {
-                ViewBag.employees = db.Employees.Where(e => e.EmployeeNumber.ToString().Contains(Search.ToString())).ToList();
-                ViewBag.employees = db.Employees.ToList();
-
-                return View("Index");
+                return View();
             }
-            else
-            {
-                ViewBag.employees = db.Employees.ToList();
-                return View("Index");
-            }
-
+           
         }
-
-        [HttpGet]
-        [Route("AdminInspect")]
-        public IActionResult AdminInspect()
-        {
-            ViewBag.Data = db.Employees.ToList();
-            return View();
-        }
-
 
         [HttpGet]
         [Route("UserInfo")]
@@ -178,24 +153,31 @@ namespace Project2.Contrellers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("UserInfo")]
         public IActionResult UserInfo(Employee userData)
         {
-            ViewBag.Count = db.Employees.OrderByDescending(a => a.EmployeeNumber).FirstOrDefault();
-            if (ModelState.IsValid)
+            try
             {
-                ViewBag.Count = db.Employees.OrderByDescending(a => a.EmployeeNumber).FirstOrDefault();
-                db.Add(userData);
-                db.SaveChanges();
-                return View("Interphase");
-            }
-            else
-            {
-                return View("UserInfo");
-                ViewBag.Count = db.Employees.OrderByDescending(a => a.EmployeeNumber).FirstOrDefault();
-            }
+                ViewBag.Count = db.Employees.OrderByDescending(a => a.EmployeeNumber).FirstOrDefault().ToString();
+                if (ModelState.IsValid)
+                {
+                    ViewBag.Count = db.Employees.OrderByDescending(a => a.EmployeeNumber).FirstOrDefault();
+                    db.Add(userData);
+                    db.SaveChanges();
+                    return View("Interphase");
+                }
+                else
+                {
+                    ViewBag.Count = db.Employees.OrderByDescending(a => a.EmployeeNumber).FirstOrDefault();
+                    return View("UserInfo");
+                }
 
-            
+            }
+            catch
+            {
+                return View();
+            }
         }
 
 
@@ -217,12 +199,20 @@ namespace Project2.Contrellers
         [Route("EditUser/{id}")]
         public IActionResult EditUser(int id,Employee Usr)
         {
-            using(DataContext ds = new DataContext())
+    
+            try
             {
-                ds.Entry(Usr).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                ds.SaveChanges();
+                using (DataContext ds = new DataContext())
+                {
+                    ds.Entry(Usr).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    ds.SaveChanges();
+                }
+                return RedirectToAction("ViewEmployee");
             }
-            return RedirectToAction("Index");
+            catch
+            {
+                return View();
+            }
         }
 
         //Deleting A Rocord of User Data
@@ -242,13 +232,21 @@ namespace Project2.Contrellers
         [Route("Delete/{id}")]
         public IActionResult Delete(int id,FormCollection keyValues )
         {
-            using(DataContext ds = new DataContext())
+            try
             {
-                Employee employee = ds.Employees.Where(a => a.EmployeeNumber == id).FirstOrDefault();
-                ds.Employees.Remove(employee);
-                ds.SaveChanges();
+                using (DataContext ds = new DataContext())
+                {
+                    Employee employee = ds.Employees.Where(a => a.EmployeeNumber == id).FirstOrDefault();
+                    ds.Employees.Remove(employee);
+                    ds.SaveChanges();
+                }
+                return RedirectToAction("ViewEmployee");
             }
-            return RedirectToAction("Index");
+            catch
+            {
+                return View();
+            }
+
         }
 
         [HttpGet]

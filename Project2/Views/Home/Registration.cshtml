@@ -7,10 +7,10 @@
 
 @if (ViewBag.Message != null)
 {
-<div class="alert alert-success">
-    <strong>Suceess Registered </strong>@ViewBag.Message
-    <a asp-action="Login"> Back to List </a>
-</div>
+    <div class="alert alert-success">
+        <strong>Suceess Registered </strong>@ViewBag.Message
+        <a asp-action="Login"> Back to List </a>
+    </div>
 }
 else
 {
@@ -91,14 +91,14 @@ else
             </div>
         </div>
     </div>
+    <div class="fixed-bottom">
+        <footer class="border-top blockquote-footer text-muted text-center">
+            <div class="container">
+                Copyright &copy; OrganizationX @DateTime.Now.Year
+            </div>
+        </footer>
+    </div>
 }
-
-
-
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 <footer class="border-top blockquote-footer text-muted text-center">
     <div class="container">
         Copyright &copy; OrganizationX @DateTime.Now.Year

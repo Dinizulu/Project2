@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Session;
 
 namespace Project2
 {
@@ -20,6 +21,9 @@ namespace Project2
             services.AddAuthenticationCore();
             services.AddHttpClient();
             services.AddAuthentication();
+            services.AddAuthentication();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             
         }
 
@@ -32,7 +36,8 @@ namespace Project2
             }
 
             app.UseStaticFiles();
-     
+            app.UseSession();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>{
             routes.MapRoute(
